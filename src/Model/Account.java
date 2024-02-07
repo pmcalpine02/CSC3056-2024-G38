@@ -2,48 +2,50 @@ package model;
 
 public class Account {
 
-	private String accountNumber;
-	private String userName;
-	private String accountType;
-	private String accountOpenDate;
+	private String account_number;
+	private String user_name;
+	private String account_type;
+	private String account_open_date;
 	
-	public Account(String accountNumber, String userName, String accountType, String accountOpenDate) {
+	public Account(String account_number, String user_name, String account_type, String account_open_date) {
 		super();
-		this.accountNumber = accountNumber;
-		this.userName = userName;
-		this.accountType = accountType;
-		this.accountOpenDate = accountOpenDate;
+		this.account_number = account_number;
+		this.user_name = user_name;
+		this.account_type = account_type;
+		this.account_open_date = account_open_date;
 	}
 	
-	public String getAccountNumber() {
-		return accountNumber;
+	public String getAccount_number() {
+		return account_number;
 	}
 	
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
+	public void setAccount_number(String account_number) {
+		this.account_number = account_number;
 	}
 	
-	public String getUserName() {
-		return userName;
+	public String getUser_name() {
+		return user_name;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	
-	public String getAccountType() {
-		return accountType;
+	public String getAccount_type() {
+		return account_type;
 	}
 	
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
+	public void setAccount_type(String account_type) {
+		this.account_type = account_type;
 	}
 	
-	public String getAccountOpenDate() {
-		return accountOpenDate;
+	public String getAccount_open_date() {
+		return account_open_date;
 	}
 	
-	public void setAccountOpenDate(String accountOpenDate) {
-		this.accountOpenDate = accountOpenDate;
+	public void setAccount_open_date(String account_open_date) {
+		this.account_open_date = account_open_date;
 	}
+	
+	
 }
