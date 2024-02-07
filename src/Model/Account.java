@@ -1,13 +1,15 @@
 package model;
 
+import java.util.Date;
+
 public class Account {
 
 	private String account_number;
 	private String user_name;
 	private String account_type;
-	private String account_open_date;
+	private Date account_open_date;
 	
-	public Account(String account_number, String user_name, String account_type, String account_open_date) {
+	public Account(String account_number, String user_name, String account_type, Date account_open_date) {
 		super();
 		this.account_number = account_number;
 		this.user_name = user_name;
@@ -39,11 +41,11 @@ public class Account {
 		this.account_type = account_type;
 	}
 	
-	public String getAccount_open_date() {
+	public Date getAccount_open_date() {
 		return account_open_date;
 	}
 	
-	public void setAccount_open_date(String account_open_date) {
+	public void setAccount_open_date(Date account_open_date) {
 		this.account_open_date = account_open_date;
 	}
 	
