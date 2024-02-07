@@ -1,6 +1,9 @@
 package model;
 
 import java.util.Date;
+//import java.text.SimpleDateFormat;
+
+//import controller.AccountController;
 
 public class Account {
 
@@ -49,5 +52,8 @@ public class Account {
 		this.account_open_date = account_open_date;
 	}
 	
+	public String toString() {
+		return account_number + ", " + user_name + ", " + account_type + ", " + account_open_date;
+	}
 	
 }
