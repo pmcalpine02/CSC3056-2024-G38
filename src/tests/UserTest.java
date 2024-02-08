@@ -46,12 +46,12 @@ public class UserTest {
 					System.out.println(TestUtils.TEXT_COLOR_RED + "TC1-getMobile_numberPassed-FAILED" + TestUtils.TEXT_COLOR_RESET);
 
 				assert testUser.getUsername() == test_username;
-				assert testUser.getPassword() == test_username;
-				assert testUser.getFirst_name() == test_username;
-				assert testUser.getLast_name() == test_username;
-				assert testUser.getMobile_number() == test_username;
+				assert testUser.getPassword() == test_password;
+				assert testUser.getFirst_name() == test_first_name;
+				assert testUser.getLast_name() == test_last_name;
+				assert testUser.getMobile_number() == test_mobile_number;
 				
-				System.out.println("All assertions have passed");
+				//System.out.println("All assertions have passed");
 	}
 	
 	public static void main (String[] args) {
