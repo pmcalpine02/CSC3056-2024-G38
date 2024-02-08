@@ -54,7 +54,7 @@ public class Account {
 	
 	public String toString() {
 		//return account_number + ", " + user_name + ", " + account_type + ", " + account_open_date;
-		return String.format("%-10s| %-30s| %-10s| %-15s|", account_number, user_name, account_type, account_open_date);
+		return String.format("%-10s| %-30s| %-10s| %-30s", account_number, user_name, account_type, account_open_date);
 	}
 	
 }
