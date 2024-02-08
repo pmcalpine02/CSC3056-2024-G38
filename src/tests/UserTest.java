@@ -5,7 +5,8 @@ import utils.TestUtils;
 
 public class UserTest {
 	public static void testUserConstructor() {
-		//User testUser = new User("mike", "my_passwd", "Mike", "Smith", "07771234567");
+		
+				//User testUser = new User("mike", "my_passwd", "Mike", "Smith", "07771234567");
 		
 				//System.out.println(testUser);
 				
@@ -51,7 +52,7 @@ public class UserTest {
 				assert testUser.getLast_name() == test_last_name;
 				assert testUser.getMobile_number() == test_mobile_number;
 				
-				//System.out.println("All assertions have passed");
+				System.out.println("All assertions have passed");
 	}
 	
 	public static void main (String[] args) {
