@@ -92,14 +92,21 @@ public class SimpleBankingApp {
 	 * @return A double value, being the balance of the account
 	 */
 	public static double getBalance(String account_number) {
-		return 0;
 		// TODO
+		double balance  = 0.0;
+		for(int i = 0; i < transactions.size(); i++ ) {
+			if (transactions.get(i).getAccount_number() == account_number) {
+				balance = balance + transactions.get(i).getTransaction_amount();
+			}
+		}
+		return balance;
 		
 	}
 	
 	
 	//////////////////////////////////////////////////////
 	public static void main(String[] args) {
+		//System.out.println(transactions.size()) ;
 		
 		loadUserData();
 		// let's print them all to see if they have been loaded (populated) properly
@@ -110,6 +117,8 @@ public class SimpleBankingApp {
 		System.out.println("Accounts: initial state, after loading...");
 		printAllAccounts();
 		
+		
+		System.out.println(transactions.size()) ;
 		// let's do some activities on the populated accounts, add transactions, etc.
 		// Deposit: adding a transaction with a positive value
 		// Withdraw: adding a transaction with a negative value
@@ -124,6 +133,7 @@ public class SimpleBankingApp {
 		// let's print the accounts and their balance to see if the above transaction have impacted their balances
 		System.out.println("Account: after the 2nd/3rd addTransaction function calls...");
 		printAllAccounts();
+		
 		
 
 	}
