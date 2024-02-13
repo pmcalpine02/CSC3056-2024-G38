@@ -70,7 +70,7 @@ public class SimpleBankingApp {
 
 		System.out.println(String.format("%-10s| %-30s| %-10s| %-30s| %-15s", 
 				"Account #", "username_of_account_holder", "type", "opening_date", "Balance"));
-		System.out.println("--------------------------------------------------------------------------------");
+		System.out.println("-------------------------------------------------------------------------------------------");
 		
 		for  (int i = 0; i < accounts.size(); i++) 
             System.out.println(accounts.get(i).toString() + "| $" + getBalance(accounts.get(i).getAccount_number()));
@@ -118,7 +118,7 @@ public class SimpleBankingApp {
 		printAllAccounts();
 		
 		
-		System.out.println(transactions.size()) ;
+		//System.out.println(transactions.size()) ;
 		// let's do some activities on the populated accounts, add transactions, etc.
 		// Deposit: adding a transaction with a positive value
 		// Withdraw: adding a transaction with a negative value
