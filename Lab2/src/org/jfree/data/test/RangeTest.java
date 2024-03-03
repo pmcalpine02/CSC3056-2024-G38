@@ -12,12 +12,13 @@ public class RangeTest {
 	private Range rangeObjectUnderTest1;
 	private Range rangeObjectUnderTest2;
 	private Range combinedRange;
+	private Range overlapRange;
 	
 	@Before
 	public void setUp() throws Exception {
 		rangeObjectUnderTest1 = new Range(-1,1);
 		rangeObjectUnderTest2 = new Range(20,31);
-		System.out.println(Range.combine(rangeObjectUnderTest2, rangeObjectUnderTest1).getUpperBound());
+		overlapRange = new Range(5,25);
 	}
 	
 	@After
@@ -25,32 +26,36 @@ public class RangeTest {
 		rangeObjectUnderTest1 = null;
 		rangeObjectUnderTest2 = null;
 		combinedRange = null;
-	}
-	@Test
-	public void test() {
-		assertTrue(new Range(-1,31) == new Range(-1,31));
-		
+		overlapRange = null;
 	}
 	
 	// Combine method tests
-	
 	@Test
-	public void testCombineRange1Valid() {
+	public void testCombineRange1ValidRange2Null() {
+		//exercise
+		combinedRange = Range.combine(rangeObjectUnderTest1, null);
+		//verify
 		assertEquals("The combined range of range1 and null should equal range1",
-				rangeObjectUnderTest1, Range.combine(rangeObjectUnderTest1, null));
+				rangeObjectUnderTest1, combinedRange);
 	}
 	
 	@Test
-	public void testCombineRange2Valid() {
+	public void testCombineRange1NullRange2Valid() {
+		//exercise
+		combinedRange = Range.combine(null, rangeObjectUnderTest1);
+		//verify
 		assertEquals("The combined range of null and range2 should equal range2",
-				rangeObjectUnderTest1, Range.combine(null, rangeObjectUnderTest1));
+				rangeObjectUnderTest1, combinedRange);
 	}
 	
 	@Test
-	public void testCombineRange1LowRange2High() {
+	public void testCombineLowRange1AndHighRange2() {
 		try {
+			//exercise
+			combinedRange = Range.combine(rangeObjectUnderTest1, rangeObjectUnderTest2);
+			//verify
 			assertEquals("The combined range of Range 1 and 2 should have the lower bound of range 1 and the upper bound of range 2",
-					new Range(-1,31), Range.combine(rangeObjectUnderTest1, rangeObjectUnderTest2));
+					new Range(-1,31), combinedRange);
 			
 		} catch (Exception e) {
 			fail("An exception should not have been thrown: " + e.getMessage());
@@ -58,18 +63,23 @@ public class RangeTest {
 	}
 	
 	@Test
-	public void testCombineRange1HighRange2Low() {
+	public void testCombineHighRange1AndLowRange2() {
+		//exercise
+		combinedRange = Range.combine(rangeObjectUnderTest2, rangeObjectUnderTest1);
+		//verify
 		assertEquals("The combined range of Range 1 and 2 should have the lower bound of range 2 and the upper bound of range 1",
-				new Range(-1,31), Range.combine(rangeObjectUnderTest2, rangeObjectUnderTest1));
+				new Range(-1,31), combinedRange);
 		
 	}
 	
 	@Test
 	public void testCombineOverlappingRanges() {
-		Range overlapRange = new Range(5,10);
 		try {
+			//exercise
+			combinedRange = Range.combine(overlapRange, rangeObjectUnderTest2);
+			//verify
 			assertEquals("The combined range of Range 1 and 2 should have the lower bound of range 2 and the upper bound of range 1",
-					new Range(5,31),Range.combine(overlapRange, rangeObjectUnderTest2));
+					new Range(5,31),combinedRange);
 		} catch (Exception e) {
 			fail("An exception should not have been thrown: " + e.getMessage());
 		}
@@ -77,21 +87,27 @@ public class RangeTest {
 	}
 	
 	@Test
-	public void testCombineBothNullRanges() {
-		assertEquals("The combined range of null and null should equal null",
-				null, Range.combine(null, null));
+	public void testCombineIdenticalRanges() {
+		//exercise
+		combinedRange = Range.combine(rangeObjectUnderTest1, rangeObjectUnderTest1);
+		//verify
+		assertEquals("The combined range of 2 identical ranges should return the same range",
+				rangeObjectUnderTest1, combinedRange);
+		
 	}
 	
-	
-
 	@Test
-	public void testCentralValueShouldBeZero() {
-		
+	public void testCombineBothNullRanges() {
+		//exercise
+		combinedRange = Range.combine(null, null);
+		//verify
+		assertNull("The combined range of null and null should equal null", combinedRange);
+	}
+	
+	@Test
+	public void testCentralValueShouldBeZero() {		
 		assertEquals("The central value of -1 and 1 should be 0",
 					0, rangeObjectUnderTest1.getCentralValue(), 0.000000001d);
 		
 	}
-	
-	
-
 }
