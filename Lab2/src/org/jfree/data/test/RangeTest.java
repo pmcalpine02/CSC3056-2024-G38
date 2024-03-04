@@ -17,6 +17,9 @@ public class RangeTest {
 	private Range negAndPosRange;
 	private Range combinedRange;
 	private Range expandedRange;
+	private double lowerBound;
+	private double upperBound;
+	private boolean result;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -196,7 +199,6 @@ public class RangeTest {
 		expandedRange = Range.expand(negAndPosRange, 10, 10);
 		//verify
 		assertEquals("Range should expanded by 1000% on both sides",new Range(-470,475),expandedRange);
-		
 	}
 	
 	@Test
@@ -212,6 +214,201 @@ public class RangeTest {
 		}
 	}
 	
+	//intersects
+	@Test
+	public void testIntersectLowerAndUpperBothBelowLowerBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-21, -21);
+		//verify
+		assertTrue("Should equal false", !result);
+	}
+	
+	@Test
+	public void testIntersectLowerLessThanLowerBoundAndUpperEqualtoLowerBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-21, -20);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerLessThanLowerBoundAndUpperBetweenBounds() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-21, 24);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerLessThanLowerBoundAndUpperGreaterThanUpperBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-21, 26);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerAndUpperEqualToLowerBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-20, -20);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerEqualToLowerBoundAndUpperEqualToUpperBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-20, 25);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	
+	@Test
+	public void testIntersectLowerAndUpperBetweenBounds() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-19, 24);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerBetweenBoundsAndUpperGreaterThanUpperBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(-19, 26);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerAndUpperEqualToUpperBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(19, 25);
+		//verify
+		assertTrue("Should equal true", result);
+	}
+	
+	@Test
+	public void testIntersectLowerAndUpperGreaterThanUpperBound() {
+		//exercise
+		boolean result = negAndPosRange.intersects(26, 26);
+		//verify
+		assertTrue("Should equal false", !result);
+	}
+	
+	@Test
+	public void testIntersectLowerGreaterThanUpperBoundAndUpperLessThanLowerBound() {
+		try {
+			//exercise
+			boolean result = negAndPosRange.intersects(26, -21);
+			fail("Error should be thrown");
+		} catch(Exception e){
+			//verify
+			assertTrue("Wrong exception thrown, should be InvalidParameterException", e.getClass().equals(IllegalArgumentException.class));
+		}
+	}
+	
+	//getLowerBound()
+	@Test
+	public void testGetLowerBoundNegative() {
+		//exercise
+		lowerBound = negativeRange.getLowerBound();
+		//verify
+		assertEquals("Should equal -10", lowerBound, -10, 0.000001d);
+	}
+	
+	@Test
+	public void testGetLowerBoundPositive() {
+		//exercise
+		lowerBound = positiveRange.getLowerBound();
+		//verify
+		assertEquals("Should equal 20", lowerBound, 20, 0.000001d);
+	}
+	
+	@Test
+	public void testGetLowerBoundZero() {
+		//exercise
+		lowerBound = new Range(0,20).getLowerBound();
+		//verify
+		assertEquals("Should equal 0", lowerBound, 0, 0.000001d);
+	}
+	
+	@Test
+	public void testGetLowerBoundVerySmall() {
+		//exercise
+		lowerBound = new Range(-1.78E+308,20).getLowerBound();
+		//verify
+		assertEquals("Should equal -1.78E+308 ", lowerBound, -1.78E+308, 0.000001d );
+	}
+	
+	@Test
+	public void testGetLowerBoundVeryLarge() {
+		//exercise
+		lowerBound = new Range(1.78E+308,1.79E+308).getLowerBound();
+		//verify
+		assertEquals("Should equal 1.78E+308 ", lowerBound, 1.78E+308, 0.000001d);
+	}
+	
+	@Test
+	public void testGetLowerBoundWhereBoundsAreEqual() {
+		//exercise
+		lowerBound = new Range(10,10).getLowerBound();
+		//verify
+		assertEquals("Should equal 10", lowerBound, 10, 0.000001d);
+	}
+	
+	
+
+	//getUpperBound()
+	@Test
+	public void testGetUpperBoundNegative() {
+		//exercise
+		upperBound = negativeRange.getUpperBound();
+		//verify
+		assertEquals("Should equal -1", upperBound, -1, 0.000001d);
+	}
+	
+	@Test
+	public void testGetUpperBoundPositive() {
+		//exercise
+		upperBound = positiveRange.getUpperBound();
+		//verify
+		assertEquals("Should equal 31", upperBound, 31, 0.000001d);
+	}
+	
+	@Test
+	public void testGetUpperBoundZero() {
+		//exercise
+		upperBound = new Range(-20,0).getUpperBound();
+		//verify
+		assertEquals("Should equal 0", upperBound, 0, 0.000001d);
+	}
+	
+	@Test
+	public void testGetUpperBoundVerySmall() {
+		//exercise
+		upperBound = new Range(-1.79E+308,-1.78E+308).getUpperBound();
+		//verify
+		assertEquals("Should equal -1.78E+308 ", upperBound, -1.78E+308, 0.000001d );
+	}
+	
+	@Test
+	public void testGetUpperBoundVeryLarge() {
+		//exercise
+		upperBound = new Range(10,1.78E+308).getUpperBound();
+		//verify
+		assertEquals("Should equal 1.78E+308 ", upperBound, 1.78E+308, 0.000001d);
+	}
+	
+	@Test
+	public void testGetUpperBoundWhereBoundsAreEqual() {
+		//exercise
+		upperBound = new Range(10,10).getUpperBound();
+		//verify
+		assertEquals("Should equal 10", upperBound, 10, 0.000001d);
+	}
+	
+
 	
 	
 }
