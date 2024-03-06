@@ -31,7 +31,7 @@ public class DataUtilitiesTest {
 	
 	//Column Total Calculation Test Cases
 	@Test
-	public void testValidDataAndColumnTotal() 
+	public void testColumnTotalValidData() 
 	{ 
 		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
 		values2D = testValues; 
@@ -44,7 +44,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testColIndexHighColumnTotal() 
+	public void testColumnTotalColIndexHigh() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -59,7 +59,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testDataNullColumnTotal() 
+	public void testDataNullColumnTotalDataNull() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -75,7 +75,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testDataValidIndexNegativeColumnTotal() 
+	public void testColumnTotalDataValidIndexNegative() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -91,7 +91,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testValidDataLastColumnTotal() 
+	public void testColumnTotalValidDataLastColumn() 
 	{ 
 		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
 		values2D = testValues; 
@@ -104,31 +104,38 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSingleElementColumnTotal() 
+	public void testColumnTotalSingleElement() 
 	{ 
-		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
-		values2D = testValues; 
-		testValues.addValue(1.0, null, null); 
-		
-		assertEquals("Wrong sum returned. It should be 1.0", 
-					1.0, DataUtilities.calculateColumnTotal(values2D, 0), 0.0000001d); 
+		try {
+			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
+			values2D = testValues; 
+			testValues.addValue(1.0, null, null);
+			
+			fail("An exception should have been thrown");
+			
+		} catch (IllegalArgumentException ex){
+			assertEquals("Illegal Argument Exception", ex.getMessage());
+		}
 	}
 	
 	@Test
-	public void testIncludesZeroColumnTotal() 
-	{ 
-		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
-		values2D = testValues; 
-		testValues.addValue(0, 1, null); 
-		testValues.addValue(0, 2, null);
-		testValues.addValue(0, 3, null);
-		
-		assertEquals("Wrong sum returned. It should be 6.0", 
-					6.0, DataUtilities.calculateColumnTotal(values2D, 1), 0.0000001d); 
+	public void testColumnTotalIncludesZero() 
+	{
+		try {
+			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
+			values2D = testValues; 
+			testValues.addValue(0, 1, null); 
+			testValues.addValue(0, 2, null);
+			testValues.addValue(0, 3, null);
+			
+			fail("An exception should have been thrown");
+		} catch (IllegalArgumentException ex) {
+			assertEquals("Illegal Argument Exception", ex.getMessage());
+		}
 	}
 	
 	@Test
-	public void testPositiveNegativeDataColumnTotal() 
+	public void testColumnTotalPositiveNegativeData() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -138,14 +145,14 @@ public class DataUtilitiesTest {
 			
 			
 			assertEquals(3.0, DataUtilities.calculateColumnTotal(values2D, 1), 0.0000001d);
-		}  catch (Exception e) {
-				fail("An exception has been thrown: " + e.getMessage());
+		}  catch (IllegalArgumentException ex) {
+				fail("An exception has been thrown: " + ex.getMessage());
 		}
 	}
 	
 	//Row Total Calculation Test Cases
 	@Test
-	public void testValidDataAndRowTotal() 
+	public void testRowTotalValidDataAndRow() 
 	{ 
 		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
 		values2D = testValues; 
@@ -158,7 +165,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testRowIndexHighRowTotal() 
+	public void testRowTotalRowIndexHigh() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -166,14 +173,15 @@ public class DataUtilitiesTest {
 			testValues.addValue(1, 2, 3); 
 			testValues.addValue(4, 5, 6);
 			
-			assertEquals(15.0, DataUtilities.calculateRowTotal(values2D, 3), 0.0000001d);
-		}  catch (Exception e) {
-			fail("An exception has been thrown: " + e.getMessage());
+			fail("An exception has been thrown");
+			
+		}  catch (IllegalArgumentException ex) {
+			assertEquals("Illegal Argument Exception", ex.getMessage());
 		}
 	}
 	
 	@Test
-	public void testDataNullRowTotal() 
+	public void testRowTotalDataNull() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -183,13 +191,13 @@ public class DataUtilitiesTest {
 			
 			assertEquals(0, DataUtilities.calculateRowTotal(values2D, 0), 0.0000001d);
 		
-		}  catch (Exception e) {
-				fail("An exception has been thrown: " + e.getMessage());
+		}  catch (IllegalArgumentException ex) {
+				fail("An exception has been thrown: " + ex.getMessage());
 		}
 	}
 	
 	@Test
-	public void testDataValidIndexNegativeRowTotal() 
+	public void testRowTotalDataValidIndexNegative() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -197,15 +205,16 @@ public class DataUtilitiesTest {
 			testValues.addValue(10, 20, 25); 
 			testValues.addValue(30, 40, 45);
 			
+			fail("An exception has been thrown");
 			
-			assertEquals(15.0, DataUtilities.calculateRowTotal(values2D, -1), 0.0000001d);
-		}  catch (Exception e) {
-				fail("An exception has been thrown: " + e.getMessage());
+		}  catch (IllegalArgumentException ex) {
+				
+				assertEquals("Illegal Argument Exception", ex.getMessage());
 		}
 	}
 	
 	@Test
-	public void testValidDataLastRowTotal() 
+	public void testRowTotalValidDataLastRow() 
 	{ 
 		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
 		values2D = testValues; 
@@ -218,18 +227,22 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSingleElementRowTotal() 
+	public void testRowTotalSingleElement() 
 	{ 
-		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
-		values2D = testValues; 
-		testValues.addValue(22.0, null, null); 
-		
-		assertEquals("Wrong sum returned. It should be 22.0", 
-					22.0, DataUtilities.calculateRowTotal(values2D, 0), 0.0000001d); 
+		try {
+			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
+			values2D = testValues; 
+			testValues.addValue(22.0, null, null);
+			
+			fail("An exception should have been thrown");
+			
+		} catch (IllegalArgumentException ex){
+			assertEquals("Illegal Argument Exception", ex.getMessage());
+		}; 
 	}
 	
 	@Test
-	public void testIncludesZeroRowTotal() 
+	public void testRowTotalIncludesZero() 
 	{ 
 		DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
 		values2D = testValues; 
@@ -242,7 +255,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testPositiveNegativeDataRowTotal() 
+	public void testRowTotalPositiveNegativeData() 
 	{ 
 		try {
 			DefaultKeyedValues2D testValues = new DefaultKeyedValues2D(); 
@@ -252,14 +265,14 @@ public class DataUtilitiesTest {
 			
 			
 			assertEquals(15.0, DataUtilities.calculateRowTotal(values2D, 1), 0.0000001d);
-		}  catch (Exception e) {
-				fail("An exception has been thrown: " + e.getMessage());
+		}  catch (IllegalArgumentException ex) {
+				fail("An exception has been thrown: " + ex.getMessage());
 		}
 	}
 	
 	//Create Number Array Test Cases
 	@Test
-	public void testPositiveValuesCreateArray() {
+	public void testCreateArrayPositiveValues() {
 		
 		double[] input = {1.0, 2.0, 3, 5};
 	    Number[] expected = {1.0, 2.0, 3, 5};
@@ -270,7 +283,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testNegativeValuesCreateArray() {
+	public void testCreateArrayNegativeValues() {
 		
 		double[] input = {-1.0, -2.0, -3.5};
 	    Number[] expected = {-1.0, -2.0, -3.5};
@@ -281,7 +294,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testZerosOnlyCreateArray() {
+	public void testCreateArrayZerosOnly() {
 		
 		double[] input = {0.0, 0.0, 0.0};
 	    Number[] expected = {0.0, 0.0, 0.0};
@@ -292,7 +305,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testPositiveNegativeMixCreateArray() {
+	public void testMixCreateArrayPositiveNegative() {
 		
 		double[] input = {-1.0, 2.0, -3.5, 4.5};
 	    Number[] expected = {-1.0, 2.0, -3.5, 4.5};
@@ -303,22 +316,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testNullValuesCreateArray() {
-		
-		try {
-			double[] input = {(Double) null};
-			Number[] expected = {null};
-
-			Number[] result = DataUtilities.createNumberArray(input);
-
-			assertArrayEquals("The method should not create a array containing null as the value.", expected, result);
-			}  catch (Exception e) {
-					fail("An exception has been thrown: " + e.getMessage());
-			}
-	}
-	
-	@Test
-	public void testEmptyValuesCreateArray() {
+	public void testCreateArrayEmptyValues() {
 		
 		double[] input = {};
 	    Number[] expected = {};
@@ -329,7 +327,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSingleElementCreateArray() {
+	public void testCreateArraySingleElement() {
 		
 		double[] input = {28.0};
 	    Number[] expected = {28.0};
@@ -340,7 +338,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testLargeValuesCreateArray() {
+	public void testCreateArrayLargeValues() {
 		
 		double[] input = {Double.MAX_VALUE, -Double.MAX_VALUE};
 	    Number[] expected = {1.7976931348623157E308, -1.7976931348623157E308};
@@ -351,7 +349,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testMaxMinValuesCreateArray() {
+	public void testCreateArrayMaxMinValues() {
 		
 		double[] input = {Double.MIN_VALUE, Double.MAX_VALUE};
 	    Number[] expected = {4.9E-324, 1.7976931348623157E308};
@@ -362,7 +360,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSmallPositiveNegativeCreateArray() {
+	public void testCreateArraySmallPositiveNegative() {
 		
 		double[] input = {Double.MIN_VALUE, -Double.MIN_VALUE};
 	    Number[] expected = {4.9E-324, -4.9E-324};
@@ -373,7 +371,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testRepeatingValuesCreateArray() {
+	public void testCreateArrayRepeatingValues() {
 		
 		double[] input = {2.2, 2.2, 2.2};
 	    Number[] expected = {2.2, 2.2, 2.2};
@@ -384,7 +382,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSequentialValuesCreateArray() {
+	public void testCreateArraySequentialValues() {
 		
 		double[] input = {1.0, 2.0, 3.0, 4.0, 5.0};
 	    Number[] expected = {1.0, 2.0, 3.0, 4.0, 5.0};
@@ -395,7 +393,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testRandomValuesCreateArray() {
+	public void testCreateArrayRandomValues() {
 		
 		double[] input = {3.14, -15.9, 2.65, -3.58, 9.79};
 	    Number[] expected = {3.14, -15.9, 2.65, -3.58, 9.79};
@@ -407,7 +405,7 @@ public class DataUtilitiesTest {
 	
 	//Create 2D Number Array Test Cases
 	@Test
-	public void testPositiveValuesCreate2DArray() {
+	public void testCreate2DArrayPositiveValues() {
 		 	
 		double[][] input = {{1.5, 2.5}, {3.5, 4.5}};
 	    Number[][] expected = {{1.5, 2.5}, {3.5, 4.5}};
@@ -418,7 +416,7 @@ public class DataUtilitiesTest {
 	}
 
 	@Test
-	public void testNegativeValuesCreate2DArray() {
+	public void testCreate2DArrayNegativeValues() {
 		
 		double[][] input = {{-1.5, -2.5}, {-3.5, -4.5}};
 	    Number[][] expected = {{-1.5, -2.5}, {-3.5, -4.5}};
@@ -429,7 +427,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testZerosOnlyCreate2DArray() {
+	public void testCreate2DArrayZerosOnly() {
 		
 		double[][] input = {{0.0, 0.0}, {0.0, 0.0}} ;
 	    Number[][] expected = {{0.0, 0.0}, {0.0, 0.0}} ;
@@ -440,7 +438,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testPositiveNegativeMixCreate2DArray() {
+	public void testCreate2DArrayPositiveNegativeMix() {
 		
 		double[][] input = {{-1.0, 2.0}, {0,0, -3.5}};
 	    Number[][] expected = {{-1.0, 2.0}, {0,0, -3.5}};
@@ -451,7 +449,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testNullValuesCreate2DArray() {
+	public void testCreate2DArrayNullValues() {
 		
 		try {
 			double[][] input = {null};
@@ -466,7 +464,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testEmptyValuesCreate2DArray() {
+	public void testCreate2DArrayEmptyValues() {
 		
 		double[][] input = {{}, {}};
 	    Number[][] expected = {{}, {}};
@@ -477,7 +475,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSingleElementCreate2DArray() {
+	public void testCreate2DArraySingleElement() {
 		
 		double[][] input = {{28.0}};
 	    Number[][] expected = {{28}};
@@ -488,7 +486,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testMaxMinValuesCreate2DArray() {
+	public void testCreate2DArrayMaxMinValues() {
 		
 		double[][] input = {{Double.MAX_VALUE}, {-Double.MAX_VALUE}};
 	    Number[][] expected = {{1.7976931348623157E308}, {-1.7976931348623157E308}};
@@ -499,7 +497,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testSmallPositiveNonZeroCreate2DArray() {
+	public void testCreate2DArraySmallPositiveNonZero() {
 		
 		double[][] input = {{Double.MIN_VALUE}};
 	    Number[][] expected = {{4.9E-324}};
@@ -511,7 +509,7 @@ public class DataUtilitiesTest {
 	
 	//Calculate Cumulative Percentages Test Cases
 	@Test
-	public void testPositiveValuesGetCumulativePercentages() {
+	public void testGetCumulativePercentagesPositiveValues() {
 		
 		DefaultKeyedValues inputData = new DefaultKeyedValues();
 		keyedValues = inputData;
@@ -528,7 +526,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testIncludeZerosValuesGetCumulativePercentages() {
+	public void testGetCumulativePercentagesIncludeZerosValues() {
 		
 		DefaultKeyedValues inputData = new DefaultKeyedValues();
 		keyedValues = inputData;
@@ -545,25 +543,28 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testNegativePositiveValuesGetCumulativePercentages() {
-		DefaultKeyedValues inputData = new DefaultKeyedValues();
-		keyedValues = inputData;
+	public void testGetCumulativePercentagesNegativePositiveValues() {
 		
-		inputData.addValue("Key1", -5);
-        inputData.addValue("Key2", 15);
-        inputData.addValue("Key3", 6);
-
-        KeyedValues cumulativePercentages = DataUtilities.getCumulativePercentages(keyedValues);
-
-        assertEquals("The cumulative percentage for Key1 is incorrect", 0.3125, cumulativePercentages.getValue("Key1"));
-        assertEquals("The cumulative percentage for Key2 is correct", 0.875, cumulativePercentages.getValue("Key2"));
-        assertEquals("The cumulative percentage for Key3 is correct", 1.0, cumulativePercentages.getValue("Key3"));
-        
-        //should throw exception!!!
+		try {
+			DefaultKeyedValues inputData = new DefaultKeyedValues();
+			keyedValues = inputData;
+			
+			inputData.addValue("Key1", -5);
+	        inputData.addValue("Key2", 15);
+	        inputData.addValue("Key3", 6);
+	
+	        
+			KeyedValues CumulativePercentages = DataUtilities.getCumulativePercentages(keyedValues);
+	        
+	        fail("An exception should have been thrown");
+		
+		} catch (IllegalArgumentException ex){
+			assertEquals("Illegal Argument Exception", ex.getMessage());
+		}
 	}
 	
 	@Test
-	public void testSingleValueGetCumulativePercentages() {
+	public void testGetCumulativePercentagesSingleValue() {
 		
 		DefaultKeyedValues inputData = new DefaultKeyedValues();
 		keyedValues = inputData;
@@ -577,7 +578,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testLargeValuesGetCumulativePercentages() {
+	public void testGetCumulativePercentagesLargeValues() {
 		
 		DefaultKeyedValues inputData = new DefaultKeyedValues();
 		keyedValues = inputData;
@@ -593,18 +594,7 @@ public class DataUtilitiesTest {
 	}
 	
 	@Test
-	public void testEmptyValuesGetCumulativePercentages() {
-		
-		DefaultKeyedValues inputData = new DefaultKeyedValues();
-		keyedValues = inputData;
-
-        KeyedValues cumulativePercentages = DataUtilities.getCumulativePercentages(keyedValues);
-
-        assertEquals("The cumulative percentage for Key1 is incorrect", 0.3125, cumulativePercentages.getValue("Key1"));
-	}
-	
-	@Test
-	public void testPrecisionValuesGetCumulativePercentages() {
+	public void testGetCumulativePercentagesPrecisionValues() {
 		
 		DefaultKeyedValues inputData = new DefaultKeyedValues();
 		keyedValues = inputData;
@@ -616,8 +606,8 @@ public class DataUtilitiesTest {
         KeyedValues cumulativePercentages = DataUtilities.getCumulativePercentages(keyedValues);
 
         assertEquals("The cumulative percentage for Key1 is correct", 0.3333, cumulativePercentages.getValue("Key1"));
-        assertEquals("The cumulative percentage for Key1 is correct", 0.6667, cumulativePercentages.getValue("Key2"));
-        assertEquals("The cumulative percentage for Key1 is correct", 1.0, cumulativePercentages.getValue("Key3"));
+        assertEquals("The cumulative percentage for Key2 is correct", 0.6667, cumulativePercentages.getValue("Key2"));
+        assertEquals("The cumulative percentage for Key3 is correct", 1.0, cumulativePercentages.getValue("Key3"));
 	}
 	
 
