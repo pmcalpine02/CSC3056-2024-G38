@@ -322,13 +322,11 @@ public class RangeTest {
 		try {
 			// exercise
 			expandedRange = Range.expand(negAndPosRange, -0.25, -0.25);
+			// verify
 			assertEquals("Range should have reduced by 25% on both sides", new Range(-8.75, 13.75), expandedRange);
 		} catch (Exception e) {
 			fail("Exception should not be thrown and range should have reduced by 25% on both sides:  " + e.getMessage());
 		}
-
-		// verify
-		assertEquals("Range should have reduced by 25% on both sides", new Range(-8.75, 13.75), expandedRange);
 	}
 
 	@Test //TC7
