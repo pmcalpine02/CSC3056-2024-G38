@@ -157,128 +157,47 @@ public class RangeTest {
 
 	/* intersect method tests */
 	@Test //TC1
-	public void testIntersectLowerAndUpperBothBelowLowerBound() {
+	public void testIntersectsFallingBeforeTheRange() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-30, -25);
 		// verify
-		assertFalse("Both values outside the range should equal false", result);
+		assertFalse("Both values before the range should equal false", result);
 	}
 
 	@Test //TC2
-	public void testIntersectLowerLessThanLowerBoundAndUpperEqualtoLowerBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-30, -20);
-		// verify
-		assertTrue("One value outside and the other on the boundary should equal true", result);
-	}
-
-	@Test //TC3
-	public void testIntersectLowerLessThanLowerBoundAndUpperBetweenBounds() {
+	public void testIntersectOneBeforeTheRangeAndOneWithin() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-30, 10);
 		// verify
-		assertTrue("One value outside and the other between bounds should equal true", result);
+		assertTrue("One intersect is between the bounds and the other is less, should equal true", result);
 	}
 	
-	@Test //TC4
-	public void testIntersectLowerLessThanLowerBoundAndUpperEqualToUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-30, 25);
-		// verify
-		assertTrue("One value outside and the other on the boundary should equal true", result);
-	}
-
-
-	@Test //TC5
-	public void testIntersectLowerLessThanLowerBoundAndUpperGreaterThanUpperBound() {
+	@Test //TC3
+	public void testIntersectsEngulfingRange() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-30, 30);
 		// verify
-		assertTrue("One value less than the lower bound and the greater than the upper bound should equal true", result);
+		assertTrue("Range is within intersects, should equal true", result);
 	}
 
-	@Test //TC6
-	public void testIntersectLowerAndUpperEqualToLowerBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-20, -20);
-		// verify
-		assertTrue("Both values on the lower boundary should equal true", result);
-	}
-	
-	@Test //TC7
-	public void testIntersectLowerEqualToLowerBoundAndUpperBetweenBounds() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-20, 10);
-		// verify
-		assertTrue("One on the boundary and one between boundaries should equal true", result);
-	}
-
-	@Test //TC8
-	public void testIntersectLowerEqualToLowerBoundAndUpperEqualToUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-20, 25);
-		// verify
-		assertTrue("Intersect values the same as the lower and upper bounds should equal true", result);
-	}
-	
-	@Test //TC9
-	public void testIntersectLowerEqualToLowerBoundAndUpperGreaterThanUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-20, 30);
-		// verify
-		assertTrue("One on the boundary and one greater should equal true", result);
-	}
-
-	@Test //TC10
-	public void testIntersectLowerAndUpperBetweenBounds() {
+	@Test //TC4
+	public void testIntersectBetweenRangeBounds() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-10, 10);
 		// verify
 		assertTrue("Both within bounds should equal true", result);
 	}
-			
-	@Test //TC11
-	public void testIntersectLowerBetweenBoundsAndUpperEqualToUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(-10, 25);
-		// verify
-		assertTrue("One between and the other greater should equal true", result);
-	}
 
-	@Test //TC12
-	public void testIntersectLowerBetweenBoundsAndUpperGreaterThanUpperBound() {
+	@Test //TC5
+	public void testIntersectOneBetweenAndOneAboveBounds() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-10, 30);
 		// verify
 		assertTrue("One between and the other greater should equal true", result);
 	}
 
-	@Test //TC13
-	public void testIntersectLowerAndUpperEqualToUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(25, 25);
-		// verify
-		assertTrue("Both on boundaries should equal true", result);
-	}
-	
-	@Test //TC14
-	public void testIntersectLowerEqualToUpperBoundAndUpperGreaterThanUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(25, 30);
-		// verify
-		assertTrue("One on the boundary and one outside should equal true", result);
-	}
-
-	@Test //TC15
-	public void testIntersectLowerAndUpperGreaterThanUpperBound() {
-		// exercise
-		boolean result = negAndPosRange.intersects(30, 35);
-		// verify
-		assertFalse("should equal false as both values are above the upper boundary", result);
-	}
-
-	@Test //TC16
-	public void testIntersectLowerGreaterThanUpperBoundAndUpperLessThanLowerBound() {
+	@Test //TC6
+	public void testIntersectInvalidLowerIntersectGreaterThanHigherIntersect() {
 		try {
 			// exercise
 			negAndPosRange.intersects(30, -30);
@@ -290,7 +209,15 @@ public class RangeTest {
 		}
 	}
 
-	@Test //TC17
+	@Test //TC7
+	public void testIntersectGreaterThanRange() {
+		// exercise
+		boolean result = negAndPosRange.intersects(30, 30);
+		// verify
+		assertFalse("Both intersects greater than upper bound should return false", result);
+	}
+	
+	@Test //TC8
 	public void testIntersectLowerBoundaryPlus1Analysis() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-19, -19);
@@ -298,7 +225,7 @@ public class RangeTest {
 		assertTrue("should equal true as both values are between bounds", result);
 	}
 	
-	@Test //TC18
+	@Test //TC9
 	public void testIntersectLowerBoundaryMinus1Analysis() {
 		// exercise
 		boolean result = negAndPosRange.intersects(-21, -21);
@@ -306,7 +233,7 @@ public class RangeTest {
 		assertFalse("should equal false as both values are below the lower bounds", result);
 	}
 	
-	@Test //TC19
+	@Test //TC10
 	public void testIntersectUpperBoundaryPlus1Analysis() {
 		// exercise
 		boolean result = negAndPosRange.intersects(26, 26);
@@ -314,7 +241,7 @@ public class RangeTest {
 		assertFalse("should equal false as both values are greater than the upper bounds", result);
 	}
 	
-	@Test //TC20
+	@Test //TC11
 	public void testIntersectUpperBoundaryMinus1Analysis() {
 		// exercise
 		boolean result = negAndPosRange.intersects(24, 24);
@@ -322,6 +249,29 @@ public class RangeTest {
 		assertTrue("should equal true as both values are between bounds", result);
 	}
 	
+	@Test //TC12
+	public void testIntersectsEqualToLowerBound() {
+		// exercise
+		boolean result = negAndPosRange.intersects(-20, -20);
+		// verify
+		assertTrue("Both values on the lower boundary should equal true", result);
+	}
+	
+	@Test //TC13
+	public void testIntersectsEqualToUpperBound() {
+		// exercise
+		boolean result = negAndPosRange.intersects(25, 25);
+		// verify
+		assertTrue("Both on boundaries should equal true", result);
+	}
+	
+	@Test //TC14
+	public void testIntersectLowerEqualToLowerBoundAndUpperEqualToUpperBound() {
+		// exercise
+		boolean result = negAndPosRange.intersects(-20, 25);
+		// verify
+		assertTrue("Intersect values the same as the lower and upper bounds should equal true", result);
+	}
 	
 	/* expand method tests */
 	@Test //TC1
@@ -421,6 +371,8 @@ public class RangeTest {
 					e.getClass().equals(InvalidParameterException.class));
 		}
 	}
+	
+	
 
 	/* getLowerBound method tests */
 	@Test //TC1
@@ -470,6 +422,7 @@ public class RangeTest {
 		// verify
 		assertEquals("Should equal 10", lowerBound, 10, 0.000001d);
 	}
+	
 
 	/* getUpperBound method tests */
 	@Test //TC1
