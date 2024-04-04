@@ -488,7 +488,8 @@ public class RangeTest {
 	/* **** White box tests (Lab 3) **** */
 
 	/* range tests */
-	@Test
+
+	@Test // TC1
 	public void testCreateInvalidRange() {
 		try {
 			// exercise
@@ -503,82 +504,104 @@ public class RangeTest {
 	}
 	
 	/* expand to include tests */
-	@Test
+	@Test // TC1
     public void testExpandToIncludeWithNull() {
+		// exercise
         Range expandedRange = Range.expandToInclude(null, 5);
+		// verify
         assertTrue("The range should be from 5 to 5",
         		expandedRange.getLowerBound() == 5 && expandedRange.getUpperBound() ==  5);
     }
 
-    @Test
+    @Test // TC2
     public void testExpandToIncludeValueLessThanLowerBound() {
+		// exercise
         Range expandedRange = Range.expandToInclude(positiveRange, 1);
+		// verify
         assertTrue("The range should be expanded to 1 to 31",
         		expandedRange.getLowerBound() == 1 && expandedRange.getUpperBound() ==  31);
     }
 
-    @Test
+    @Test // TC3
     public void testExpandToIncludeValueGreaterThanUpperBound() {
+		// exercise
         Range expandedRange = Range.expandToInclude(positiveRange, 50);
+		// verify
         assertTrue("The range should be expanded to 20 to 50",
         		expandedRange.getLowerBound() == 20 && expandedRange.getUpperBound() ==  50);
     }
 
-    @Test
+    @Test // TC4
     public void testExpandToIncludeValueWithinRange() {
-        Range expandedRange = Range.expandToInclude(positiveRange, 25);
+		// exercise
+		Range expandedRange = Range.expandToInclude(positiveRange, 25);
+		// verify
         assertTrue("The range should remain 20 to 31", 
         		expandedRange.getLowerBound() == 20 && expandedRange.getUpperBound() ==  31);
     }
     
     
     /* constrain tests */
-    @Test
+    @Test // TC1
     public void testConstrainRangeContainsValue() {
+		// exercise
         double closestValue = positiveRange.constrain(25);
+		// verify
         assertTrue("The value returned should be set the the constrain value", closestValue == 25);
     }
 
-    @Test
+    @Test // TC2
     public void testConstrainValueGreaterThanUpperBound() {
+		// exercise
         double closestValue = positiveRange.constrain(50);
+		// verify
         assertTrue("The  value returned should be set to the upper bound", closestValue == 31);
     }
 
-    @Test
+    @Test // TC3
     public void testConstrainValueLessThanLowerBound() {
+		// exercise
         double closestValue = positiveRange.constrain(-10);
+		// verify
         assertTrue("The  value returned should be set to the lower bound", closestValue == 20);
     }
     
     
     /* Equals tests */
     
-    @Test
+    @Test // TC1
     public void testEqualsLowerBoundNotEqual() {
+		// exercise
         Range testRange = new Range(10, 31);
+		// verify
         assertFalse("Should return false according to implemented logic", positiveRange.equals(testRange));
     }
 
-    @Test
+    @Test // TC2
     public void testEqualsUpperBoundNotEqual() {
+		// exercise
         Range testRange = new Range(20, 50);
+		// verify
         assertTrue("Should return true according to implemented logic", positiveRange.equals(testRange));
     }
     
     
     /* Shift tests */
     
-    @Test 
+    @Test // TC1
     public void testShiftAllowZeroCrossingTrue(){
+		// exercise
     	Range testRange = Range.shift(negAndPosRange, 30, true);
+		// verify
     	assertTrue("Range should have shifted to the right by 30",
     			testRange.getLowerBound() == 10 && testRange.getUpperBound() ==  55);
     }
     
-    @Test
+    @Test // TC2
     public void testShiftAllowZeroCrossingFalse(){
+		// exercise
     	Range testRange = Range.shift(negAndPosRange, 30, false);
+		// verify
     	assertTrue("Upper bound should have shifted to the right by 30 and lower bound should be 0",
     			testRange.getLowerBound() == 0 && testRange.getUpperBound() ==  55);
     }
